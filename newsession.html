@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inicio de Sesión - Sistema de Evaluación CETI</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Fuente Roboto -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <!-- CSS personalizado -->
+  <link rel="stylesheet" href="estilopro.css">
+</head>
+<body class="bg-light d-flex justify-content-center align-items-center vh-100">
+
+  <!-- Logo -->
+  <img src="cetilogo.png" alt="Logo CETI" class="position-absolute top-0 start-0 m-3" style="width:120px;">
+
+  <!-- 🟦 LOGIN -->
+  <div class="card p-4 shadow">
+    <div id="alerta" class="alert alert-danger d-none" role="alert">
+  Por favor, completa todos los campos.
+</div>
+     <label class="label-box titulo-label text-center mb-3">
+   Bienvenido al Sistema de Evaluación de Docentes y Materias
+ </label>
+    <form id="loginForm">
+      <div class="mb-3">
+        <label for="loginCorreo" class="label-box">Ingrese su Correo Institucional/ Nombre de Usuario</label>
+        <input type="email" class="form-control" id="loginCorreo" placeholder="ejemplo@ceti.mx" required>
+
+        <label for="loginPassword" class="label-box mt-2">Contraseña</label>
+        <input type="password" class="form-control" id="loginPassword" placeholder="Contraseña" required>
+      </div>     
+      
+    </form>
+    <button type="submit" class="btn btn-success">Iniciar Sesión</button>
+
+   <label style="border-radius: 0; border: 1px solid white; display: block; text-align: center; padding: 8px 12px;font-size:9px;">
+  ¿No tienes una cuenta?
+  <a href="register.html" class="text-decoration-underline" style="color: white;">Regístrate aquí</a>
+</label>
+  </div>
+ 
+  <!-- JS personalizado -->
+  <script src="scriptini.js"></script>
+</body>
+</html>
