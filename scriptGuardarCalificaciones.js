@@ -8,6 +8,8 @@ alerta.className = 'alert alert-danger d-none';
 alerta.setAttribute('role', 'alert');
 registroForm.parentNode.insertBefore(alerta, registroForm);
 
+
+// Evento click del botón (VERSIÓN CORREGIDA)
 botonEnviarMaestro.addEventListener('click', function(e) {
     e.preventDefault();
     const ID_Maestro = document.getElementById('tipo').value;
@@ -52,8 +54,11 @@ function guardarCalificacionMaestro(ID_Maestro, calificacion, ID_Calificacion) {
         alerta.textContent = 'Error de conexión con el servidor';
         alerta.classList.remove('d-none');
     });
+    alert('Registro exitoso!');
 }
 
+
+// Llamar a la función que guarda en la BD
 botonEnviarMateria.addEventListener('click', function(e) {
     e.preventDefault();
     const ID_Materia = document.getElementById('tipo_materia').value;
@@ -98,7 +103,10 @@ function guardarCalificacionMateria(ID_Materia, calificacion, ID_Calificacion) {
         alerta.textContent = 'Error de conexión con el servidor';
         alerta.classList.remove('d-none');
     });
+    alert('Registro exitoso!');
 }
+
+// Llamar a la función que guarda en la BD
 botonEnviarMateriaMaestro.addEventListener('click', function(e) {
     e.preventDefault();
     const ID_Materia = document.getElementById('tipo_materia_maestro').value;
@@ -147,6 +155,7 @@ function guardarCalificacionMateriaMaestro(ID_Materia, calificacion, ID_Califica
         alerta.textContent = 'Error de conexión con el servidor';
         alerta.classList.remove('d-none');
     });
+    alert('Registro exitoso!');
 }
 
 
