@@ -6,6 +6,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static('../frontend')); // Servir archivos frontend desde servidor
 
 const conexion = mysql.createConnection({
     host: 'localhost',
@@ -84,7 +85,7 @@ app.get('/maestros', (req, res) => {
 app.get('/materia', (req, res) => {
     console.log('✅ Entró a /materia');
 
-    const sql = `SELECT Nombre_Materia FROM materia_id`;
+    const sql = `SELECT ID_Materia, Nombre_Materia FROM materia_id`;
 
     conexion.query(sql, (err, result) => {
         
@@ -170,35 +171,40 @@ app.post('/calificaciones', (req, res) => {
 });
 
 
-app.post('/guardar-datos-alumno', (req, res) => {
-    const { usuario, contrasena, Ruta_foto_perfil } = req.body;
+app.post('/guardar-formulario-Materia', (req, res) => {
+    const { Calificacion, ID_Calificacion } = req.body;
 
-    const sql = 'INSERT INTO alumno (Usuario, Contraseña, Ruta_foto_perfil) VALUES (?, ?, ?)';
-    
-    conexion.query(sql, [usuario, contrasena, Ruta_foto_perfil || ''], (err, result) => {
+    if (!Calificacion || !ID_Calificacion) {
+        return res.status(400).json({ 
+            error: 'Faltan datos obligatorios' 
+        });
+    }
+
+    const sql = `
+        UPDATE calificacion_materia 
+        SET Calificacion = ? 
+        WHERE ID_Calificacion = ?
+    `;
+
+    conexion.query(sql, [Calificacion, ID_Calificacion], (err, result) => {
         if (err) {
-            console.error('Error al guardar alumno:', err);
-            return res.status(500).json({ error: 'Error al guardar los datos del alumno' });
+            console.error('❌ Error SQL:', err.message);
+            return res.status(500).json({ 
+                error: 'Error al guardar: ' + err.message 
+            });
         }
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ 
+                error: 'No se encontró esa calificación' 
+            });
+        }
+
         res.json({ 
-            mensaje: 'Datos del alumno guardados correctamente'
+            mensaje: '✅ Calificación actualizada correctamente' 
         });
     });
 });
-
-
-app.post('/guardar-formulario-Materia', (req, res) => {
-    const { Calificacion, ID_Calificacion, ID_Materia } = req.body;
-    const sql = 'INSERT INTO calificacion_materia (Calificacion, ID_Calificacion, ID_Materia) VALUES (?, ?, ?)';
-    conexion.query(sql, [Calificacion, ID_Calificacion, ID_Materia], (err) => {
-        if (err) {
-            console.error('Error al guardar calificación de materia:', err);
-            return res.status(500).json({ error: 'Error al guardar la calificación de materia' });
-        }
-        res.json({ mensaje: 'Calificación de materia guardada correctamente' }); 
-    });
-});
-
 
 app.post('/guardar-formulario-MateriaMaestro', (req, res) => {
     const { Calificacion, ID_Calificacion, ID_Materia, ID_Maestro } = req.body;

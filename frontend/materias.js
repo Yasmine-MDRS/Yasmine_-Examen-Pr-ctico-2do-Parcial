@@ -15,9 +15,9 @@ fetch('http://localhost:3000/materia')
         <p>${materia.Nombre_Materia}</p>
       `;
 
-      // ✅ Click para ir al detalle
+      // ✅ Click para ir a evaluar materia
       card.addEventListener('click', () => {
-        window.location.href = `detalle-materia.html?id=${materia.ID_Materia}`;
+        window.location.href = `materias-evaluar.html?id=${materia.ID_Materia}&nombre=${encodeURIComponent(materia.Nombre_Materia)}`;
       });
 
       contenedor.appendChild(card);
