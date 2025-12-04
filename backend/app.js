@@ -22,6 +22,41 @@ conexion.connect(err => {
     console.log('✅ Conectado a MySQL - bd_ceti_evaluacion');
 });
 
+app.post('/guardar-datos-alumno', (req, res) => {
+  const { usuario, contrasena, Ruta_foto_perfil } = req.body;
+
+  const sql = `
+    INSERT INTO alumno (Usuario, Contraseña, Ruta_foto_perfil)
+    VALUES (?, ?, ?)
+  `;
+
+  conexion.query(sql, [usuario, contrasena, Ruta_foto_perfil], (err) => {
+    if (err) {
+      return res.status(500).json({ error: 'Error al registrar usuario' });
+    }
+    res.json({ mensaje: 'Registro correcto' });
+  });
+});
+
+app.post('/login', (req, res) => {
+  const { usuario, contrasena } = req.body;
+
+  const sql = `
+    SELECT * FROM alumno 
+    WHERE Usuario = ? AND Contraseña = ?
+  `;
+
+  conexion.query(sql, [usuario, contrasena], (err, result) => {
+    if (err) return res.status(500).json({ error: 'Error servidor' });
+
+    if (result.length === 0) {
+      return res.status(401).json({ error: 'Usuario o contraseña incorrectos' });
+    }
+
+    res.json({ mensaje: 'Login correcto' });
+  });
+});
+
 
 app.get('/maestros', (req, res) => {
     const sql = `
@@ -160,7 +195,7 @@ app.post('/guardar-formulario-Materia', (req, res) => {
             console.error('Error al guardar calificación de materia:', err);
             return res.status(500).json({ error: 'Error al guardar la calificación de materia' });
         }
-        res.json({ mensaje: 'Calificación de materia guardada correctamente' });
+        res.json({ mensaje: 'Calificación de materia guardada correctamente' }); 
     });
 });
 

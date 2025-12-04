@@ -28,10 +28,5 @@ botonLogin.addEventListener('click', function(e) {
       alert('✅ Login correcto');
       window.location.href = 'Start.html';
     }
-  })
-  .catch(err => {
-    console.error('Error de conexión:', err);
-    alerta.textContent = 'Error de conexión con el servidor. Asegúrate de que está corriendo en puerto 3000.';
-    alerta.classList.remove('d-none');
   });
 });
