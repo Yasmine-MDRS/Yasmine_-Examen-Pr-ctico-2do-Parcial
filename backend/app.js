@@ -6,12 +6,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// CONEXIÓN MYSQL (debe ir antes de las rutas)
 const conexion = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'password',
-    database: 'bd_ceti_evaluacion'  // Nombre correcto
+    password: '',
+    database: 'bd_ceti_evaluacion'
 });
 
 conexion.connect(err => {
@@ -19,10 +18,32 @@ conexion.connect(err => {
         console.error('Error en la conexión:', err);
         return;
     }
-    console.log('Conectado a MySQL - bd_ceti_evaluacion');
+    console.log('✅ Conectado a MySQL - bd_ceti_evaluacion');
 });
 
-// RUTAS
+
+app.get('/maestros', (req, res) => {
+    const sql = `
+        SELECT 
+            m.ID_Maestro,
+            mi.Nombre,
+            mi.Apellido
+        FROM maestro m
+        JOIN maestro_id mi 
+        ON m.ID_Maestro = mi.ID_Maestro
+    `;
+
+    conexion.query(sql, (err, result) => {
+        if (err) {
+            console.error('Error al obtener maestros:', err);
+            return res.status(500).json({ error: 'Error al obtener maestros' });
+        }
+
+        res.json(result);
+    });
+});
+
+
 app.post('/calificaciones', (req, res) => {
     const { usuario, tipo, id, calificacion } = req.body;
 
@@ -30,7 +51,6 @@ app.post('/calificaciones', (req, res) => {
         return res.status(400).json({ error: "Datos incompletos." });
     }
 
-    // Validación del tipo
     if (!["maestro", "materia", "materiamaestro"].includes(tipo)) {
         return res.status(400).json({ error: "Tipo inválido." });
     }
@@ -70,12 +90,10 @@ app.post('/calificaciones', (req, res) => {
     });
 });
 
+
 app.post('/guardar-datos-alumno', (req, res) => {
     const { usuario, contrasena, Ruta_foto_perfil } = req.body;
-    
-    console.log('Guardando alumno:', { usuario, contrasena, Ruta_foto_perfil });
-    
-    // CORRECCIÓN: Tabla 'alumno' (singular, como en tu SQL)
+
     const sql = 'INSERT INTO alumno (Usuario, Contraseña, Ruta_foto_perfil) VALUES (?, ?, ?)';
     
     conexion.query(sql, [usuario, contrasena, Ruta_foto_perfil || ''], (err, result) => {
@@ -84,69 +102,50 @@ app.post('/guardar-datos-alumno', (req, res) => {
             return res.status(500).json({ error: 'Error al guardar los datos del alumno' });
         }
         res.json({ 
-            mensaje: 'Datos del alumno guardados correctamente', 
-            id: result.insertId 
+            mensaje: 'Datos del alumno guardados correctamente'
         });
     });
 });
 
+
 app.post('/guardar-formulario-Materia', (req, res) => {
     const { Calificacion, ID_Calificacion, ID_Materia } = req.body;
-    const sql = 'INSERT INTO calificacion_materia (Calificacion, ID_Materia) VALUES (?, ?, ?)';
-    conexion.query(sql, [Calificacion, ID_Calificacion, ID_Materia], (err, result) => {
+    const sql = 'INSERT INTO calificacion_materia (Calificacion, ID_Calificacion, ID_Materia) VALUES (?, ?, ?)';
+    conexion.query(sql, [Calificacion, ID_Calificacion, ID_Materia], (err) => {
         if (err) {
             console.error('Error al guardar calificación de materia:', err);
             return res.status(500).json({ error: 'Error al guardar la calificación de materia' });
         }
-        res.json({
-            mensaje: 'Calificación de materia guardada correctamente',
-            id: result.insertId
-        });
+        res.json({ mensaje: 'Calificación de materia guardada correctamente' });
     });
 });
+
+
 app.post('/guardar-formulario-MateriaMaestro', (req, res) => {
     const { Calificacion, ID_Calificacion, ID_Materia, ID_Maestro } = req.body;
     const sql = 'INSERT INTO calificacion_materiamaestro (Calificacion, ID_Calificacion, ID_Materia, ID_Maestro) VALUES (?, ?, ?, ?)';
-    conexion.query(sql, [Calificacion, ID_Calificacion, ID_Materia, ID_Maestro], (err, result) => {
+    conexion.query(sql, [Calificacion, ID_Calificacion, ID_Materia, ID_Maestro], (err) => {
         if (err) {
             console.error('Error al guardar calificación de materia-maestro:', err);
             return res.status(500).json({ error: 'Error al guardar la calificación de materia-maestro' });
         }
-        res.json({
-            mensaje: 'Calificación de materia-maestro guardada correctamente',
-            id: result.insertId
-        });
+        res.json({ mensaje: 'Calificación de materia-maestro guardada correctamente' });
     });
 });
+
 
 app.post('/guardar-formulario-Maestro', (req, res) => {
     const { Calificacion, ID_Calificacion, ID_Maestro } = req.body;
     const sql = 'INSERT INTO calificacion_maestro (Calificacion, ID_Calificacion, ID_Maestro) VALUES (?, ?, ?)';
-    conexion.query(sql, [Calificacion, ID_Calificacion, ID_Maestro], (err, result) => {
+    conexion.query(sql, [Calificacion, ID_Calificacion, ID_Maestro], (err) => {
         if (err) {
             console.error('Error al guardar calificación de maestro:', err);
             return res.status(500).json({ error: 'Error al guardar la calificación de maestro' });
         }
-        res.json({
-            mensaje: 'Calificación de maestro guardada correctamente',
-            id: result.insertId
-        });
+        res.json({ mensaje: 'Calificación de maestro guardada correctamente' });
     });
 });
 
-app.post('/guardar-formulario-MateriaMaestro', (req, res) => {
-    const { Calificacion, ID_Calificacion, ID_Materia, ID_Maestro } = req.body;
-    const sql = 'INSERT INTO calificacion_materiamaestro (Calificacion, ID_Calificacion, ID_Materia, ID_Maestro) VALUES (?, ?, ?, ?)';
-    conexion.query(sql, [Calificacion, ID_Calificacion, ID_Materia, ID_Maestro], (err, result) => {
-        if (err) {
-            console.error('Error al guardar calificación de materia-maestro:', err);
-            return res.status(500).json({ error: 'Error al guardar la calificación de materia-maestro' });
-        }
-        res.json({
-            mensaje: 'Calificación de materia-maestro guardada correctamente',
-            id: result.insertId
-        });
-    });
-});
 
-app.listen(3000, () => console.log('Server en puerto 3000'));
+// ✅ ARRANQUE DEL SERVIDOR
+app.listen(3000, () => console.log('✅ Server en puerto 3000'));

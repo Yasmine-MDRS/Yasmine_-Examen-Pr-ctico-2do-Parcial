@@ -1,0 +1,75 @@
+
+/* ---------- NAVBAR ----------- */
+*Barra superior */
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #fdf9ff;
+}
+
+/*Barra superior */
+.barra-superior {
+  background-color: #7dc2ae;
+  padding: 10px 20px;
+  height: 100px;
+}
+
+.logo {
+  width: 90px;
+  height: 90PX;
+}
+
+.nav-link {
+  color: black !important;
+  font-weight: 500;
+  margin-right: 15px;
+}
+
+.nav-link.active {
+  background-color: transparent;
+  border-radius: 8px;
+  padding: 5px 15px;
+  box-shadow: 0 0 6px rgba(0,0,0,0.2);
+  border: 3.5px solid #637AB9;  
+}
+
+.btn-cerrar {
+  background-color: #8a93e3;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 15px;
+  font-weight: 500;
+}
+
+.btn-cerrar:hover {
+  background-color: #7a83d6;
+}
+
+/* ---------- LISTA DE MAESTROS ----------- */
+.contenedor-maestros {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 30px;
+    padding: 40px;
+}
+
+.card-maestro {
+    text-align: center;
+    padding: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.card-maestro:hover {
+    transform: scale(1.05);
+}
+
+.card-maestro img {
+    width: 130px;
+    height: 130px;
+}
+
+.card-maestro p {
+    margin-top: 10px;
+    font-size: 15px;
+}
