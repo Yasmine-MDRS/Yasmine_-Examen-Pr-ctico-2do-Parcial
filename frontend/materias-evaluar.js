@@ -62,13 +62,18 @@ document.getElementById('btnEnviar').addEventListener('click', function() {
     return;
   }
 
-  // Enviar datos al backend
-  fetch('http://localhost:3000/guardar-formulario-Materia', {
+  // Primero necesitas obtener el ID_Calificacion que corresponda a esta materia
+  // Esto requiere una consulta previa o mapeo de datos
+  
+  // SOLUCIÓN TEMPORAL: Si el ID_Materia se mapea directamente a ID_Calificacion
+  // Por ejemplo: '18MPEDS0623' -> 'CA28' (según tu tabla)
+  
+  // Enviar datos al backend: enviamos la calificación y el ID_Materia
+  fetch('http://localhost:3000/guardar-calificacion-materia', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       Calificacion: calificacionSeleccionada,
-      ID_Calificacion: 1, // Puedes ajustar si tienes otro valor
       ID_Materia: idMateria
     })
   })
