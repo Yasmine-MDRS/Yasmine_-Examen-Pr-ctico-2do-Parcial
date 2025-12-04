@@ -11,7 +11,7 @@ fetch('http://localhost:3000/materiamaestro')
       card.classList.add('card-materia-maestro');
 
       card.innerHTML = `
-        <img src="materia.png" alt="Materia">
+        <img src="materiamaestro.jpg" alt="Materia">
         <h6>${item.Nombre_Materia}</h6>
         <p>${item.Nombre} ${item.Apellido}</p>
       `;
