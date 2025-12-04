@@ -44,6 +44,53 @@ app.get('/maestros', (req, res) => {
 });
 
 
+
+app.get('/materia', (req, res) => {
+    console.log('✅ Entró a /materia');
+
+    const sql = `SELECT Nombre_Materia FROM materia_id`;
+
+    conexion.query(sql, (err, result) => {
+        if (err) {
+            console.error('❌ Error SQL:', err);
+            return res.status(500).json({ error: 'Error al obtener materias' });
+        }
+
+        res.json(result);
+    });
+});
+
+
+app.get('/diagnostico', (req, res) => {
+  const queries = [
+    'SELECT COUNT(*) as total FROM materiamaestro',
+    'SELECT COUNT(*) as total FROM maestro_id',
+    'SELECT COUNT(*) as total FROM materia_id'
+  ];
+
+  Promise.all(queries.map(query => {
+    return new Promise((resolve, reject) => {
+      conexion.query(query, (err, result) => {
+        if (err) reject(err);
+        else resolve(result[0]);
+      });
+    });
+  }))
+  .then(results => {
+    res.json({
+      materiamaestro: results[0].total,
+      maestros: results[1].total,
+      materias: results[2].total,
+      estado: 'Diagnóstico completado'
+    });
+  })
+  .catch(err => {
+    res.status(500).json({ error: err.message });
+  });
+});
+
+
+
 app.post('/calificaciones', (req, res) => {
     const { usuario, tipo, id, calificacion } = req.body;
 
