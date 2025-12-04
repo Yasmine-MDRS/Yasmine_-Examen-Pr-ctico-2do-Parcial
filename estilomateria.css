@@ -1,0 +1,112 @@
+*Barra superior */
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #fdf9ff;
+}
+.barra-superior {
+  background-color: #7dc2ae;
+  padding: 10px 20px;
+  height: 100px;
+}
+
+.logo {
+  width: 90px;
+  height: 90PX;
+}
+
+.nav-link {
+  color: black !important;
+  font-weight: 500;
+  margin-right: 15px;
+}
+
+.nav-link.active {
+  background-color: transparent;
+  border-radius: 8px;
+  padding: 5px 15px;
+  box-shadow: 0 0 6px rgba(0,0,0,0.2);
+  border: 3.5px solid #637AB9;  
+}
+
+.btn-cerrar {
+  background-color: #8a93e3 !important;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 15px;
+  font-weight: 500;
+}
+
+.btn-cerrar:hover {
+  background-color: #7a83d6;
+}
+.card {
+    width: 70%;
+    margin: 40px auto;
+    background-color: #faefff;
+    padding: 40px;
+    border-radius: 15px;
+    text-align: center;
+}
+
+/* Contenedor de estrellas */
+.stars {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin: 20px 0;
+}
+
+/* Botones de estrella */
+.star-btn {
+    font-size: 40px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #c5c5c5;
+    transition: 0.2s;
+}
+
+/* Hover */
+.star-btn:hover {
+    transform: scale(1.15);
+    color: #ffcc00;
+}
+
+/* Estado seleccionado */
+.star-btn.selected {
+    color: #ffcc00;
+}
+/* Cada texto con borde */
+.item {
+    background-color: white;
+    margin: 12px 0;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 20px;
+    border: 2px solid #CAC4D0;  /* <-- borde visible */
+}
+
+/* Contenedor para alinear el botón a la derecha */
+.submit-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end; /* <-- alinea a la derecha */
+    margin-top: 25px;
+}
+
+/* Botón se adapta a su contenido */
+.submit {
+    background-color: #637ccf;
+    color: white;
+    border: none;
+    padding: 10px 20px; /* tamaño auto */
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    width: auto; /* <-- evita que se estire */
+}
+
+
+
