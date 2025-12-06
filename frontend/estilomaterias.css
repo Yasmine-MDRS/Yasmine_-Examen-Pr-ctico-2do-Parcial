@@ -1,0 +1,79 @@
+/* ---------- BARRA SUPERIOR ----------- */
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #fdf9ff;
+}
+
+.barra-superior {
+  background-color: #7dc2ae;
+  padding: 10px 20px;
+  height: 100px;
+}
+
+.logo {
+  width: 90px;
+  height: 90px;
+}
+
+.nav-link {
+  color: black !important;
+  font-weight: 500;
+  margin-right: 15px;
+}
+
+.nav-link.active {
+  border-radius: 8px;
+  padding: 5px 15px;
+  box-shadow: 0 0 6px rgba(0,0,0,0.2);
+  border: 3.5px solid #637AB9;  
+}
+
+.btn-cerrar {
+  background-color: #8a93e3;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 15px;
+  font-weight: 500;
+}
+
+.btn-cerrar:hover {
+  background-color: #7a83d6;
+}
+
+/* ---------- LISTA DE MATERIAS ----------- */
+.contenedor-materias {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 30px;
+  padding: 40px;
+}
+
+/* ✅ ESTA ES LA CLASE CORRECTA */
+.card-materia {
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 15px;
+  text-align: center;
+  cursor: pointer;
+  transition: 
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border 0.3s ease;
+}
+
+.card-materia:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  border: 2px solid #637AB9;
+}
+
+.card-materia img {
+  width: 130px;
+  height: 130px;
+}
+
+.card-materia p {
+  margin-top: 10px;
+  font-size: 15px;
+}
